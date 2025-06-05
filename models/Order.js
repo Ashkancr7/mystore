@@ -26,7 +26,6 @@ const addressSchema = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema({
   items: [orderItemSchema],
-
   address: addressSchema,
 
   paymentStatus: {
@@ -47,6 +46,10 @@ const orderSchema = new mongoose.Schema({
   finalAmount: Number,        // مبلغ نهایی = totalAmount - discountAmount + shippingCost
 
   couponCode: { type: String, default: null },
+
+  // 🔵 اطلاعات مرتبط با پرداخت
+  authority: { type: String, default: null }, // کد authority زرین‌پال
+  refId: { type: String, default: null },     // کد رهگیری پرداخت موفق
 
   createdAt: { type: Date, default: Date.now },
 });
