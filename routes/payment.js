@@ -11,7 +11,7 @@ const FRONT_URL = 'http://localhost:3001';
 const CALLBACK_URL = 'http://localhost:5000/api/payment/verify'; // مسیر API بک‌اند
 
 // -------------------------
-// 🟢 1. ایجاد سفارش و پرداخت
+//  1. ایجاد سفارش و پرداخت
 // -------------------------
 router.post('/pay', async (req, res) => {
   try {
