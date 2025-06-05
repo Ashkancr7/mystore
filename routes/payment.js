@@ -7,7 +7,7 @@ const router = express.Router();
 
 // مشخصات زرین‌پال
 const MERCHANT_ID = 'e150f93f-7a3b-432f-b7e2-4b72f8e198b1';
-const FRONT_URL = 'http://localhost:3001';
+const FRONT_URL = 'https://my-front-hecm.vercel.app';
 const CALLBACK_URL = 'http://localhost:5000/api/payment/verify'; // مسیر API بک‌اند
 
 // -------------------------
