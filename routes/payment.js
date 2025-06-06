@@ -61,7 +61,7 @@ router.post('/pay', async (req, res) => {
       couponCode,
       paymentStatus: 'unpaid',
       orderStatus: 'pending',
-      receiverName,
+      
     });
 
     // ارسال درخواست به زرین‌پال
