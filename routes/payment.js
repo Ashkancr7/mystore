@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const Payment = require('../models/Payment');
 
 const router = express.Router();
 
@@ -98,6 +99,7 @@ router.post('/pay', async (req, res) => {
 // -------------------------
 // 🟢 2. تأیید پرداخت
 // -------------------------
+
 router.get('/verify', async (req, res) => {
   const { Authority, Status, order_id } = req.query;
 
@@ -134,6 +136,15 @@ router.get('/verify', async (req, res) => {
       order.paymentStatus = 'paid';
       order.refId = result.ref_id;
       await order.save();
+
+      // 🔵 ذخیره پرداخت موفق در مجموعه Payment
+      await Payment.create({
+        amount: order.finalAmount,
+        authority: Authority,
+        refId: result.ref_id,
+        isPaid: true,
+        orderId: order._id.toString(),
+      });
 
       return res.redirect(
         `${FRONT_URL}/VerifyPage?status=success&ref_id=${result.ref_id}`
