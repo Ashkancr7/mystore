@@ -52,6 +52,7 @@ router.post('/pay', async (req, res) => {
 
     // ذخیره سفارش در حالت اولیه
     const newOrder = await Order.create({
+      userId: req.user.id,
       items: orderItems,
       address,
       totalAmount,
@@ -164,7 +165,12 @@ router.get('/verify', async (req, res) => {
 
 router.get("/all", async (req, res) => {
   try {
-    const payments = await Payment.find().sort({ createdAt: -1 });
+    const payments = await Payment.find()
+    .sort({ createdAt: -1 })
+    .populate({
+      path: 'orderId',
+      populate: { path: 'userId', select: 'name email' }
+    });
     res.json(payments);
   } catch (err) {
     res.status(500).json({ message: "خطا در دریافت پرداخت‌ها" });
