@@ -149,4 +149,13 @@ router.get('/verify', async (req, res) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    const payments = await Payment.find().sort({ createdAt: -1 });
+    res.json(payments);
+  } catch (err) {
+    res.status(500).json({ message: "خطا در دریافت پرداخت‌ها" });
+  }
+});
+
 module.exports = router;
