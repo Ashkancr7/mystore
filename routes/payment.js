@@ -145,7 +145,7 @@ router.get('/verify', async (req, res) => {
         authority: Authority,
         refId: result.ref_id,
         isPaid: true,
-        orderId: order._id.toString(),
+        orderId: order._id,
         receiverName:order.receiverName
       });
 
