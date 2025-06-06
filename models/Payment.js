@@ -7,6 +7,7 @@ const paymentSchema = new mongoose.Schema(
     refId: String,
     isPaid: Boolean,
     orderId: String,
+    receiverName:String
   },
   { timestamps: true }
 );
