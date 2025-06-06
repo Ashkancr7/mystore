@@ -3,6 +3,7 @@ const axios = require('axios');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const Payment = require('../models/Payment');
+
 const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
@@ -14,6 +15,7 @@ const CALLBACK_URL = 'https://mystore-pbfe.onrender.com/api/payment/verify'; // 
 // -------------------------
 //  1. ایجاد سفارش و پرداخت
 // -------------------------
+
 router.post('/pay', authMiddleware, async (req, res) => {
   try {
     const {
@@ -62,7 +64,7 @@ router.post('/pay', authMiddleware, async (req, res) => {
       couponCode,
       paymentStatus: 'unpaid',
       orderStatus: 'pending',
-      
+
     });
 
     // ارسال درخواست به زرین‌پال
@@ -141,7 +143,6 @@ router.get('/verify', async (req, res) => {
 
       // 🔵 ذخیره پرداخت موفق در مجموعه Payment
       await Payment.create({
-        userId: order.userId,
         amount: order.finalAmount,
         authority: Authority,
         refId: result.ref_id,
