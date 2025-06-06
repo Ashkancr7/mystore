@@ -144,6 +144,7 @@ router.get('/verify', async (req, res) => {
         refId: result.ref_id,
         isPaid: true,
         orderId: order._id.toString(),
+        receiverName:order.receiverName
       });
 
       return res.redirect(
