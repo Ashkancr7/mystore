@@ -141,6 +141,7 @@ router.get('/verify', async (req, res) => {
 
       // 🔵 ذخیره پرداخت موفق در مجموعه Payment
       await Payment.create({
+        userId: order.userId,
         amount: order.finalAmount,
         authority: Authority,
         refId: result.ref_id,
