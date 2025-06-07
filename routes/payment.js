@@ -193,20 +193,26 @@ router.put('/order/:id', async (req, res) => {
     const { id } = req.params;
     const { paymentStatus, address } = req.body;
 
-    const order = await Order.findById(id);
-    if (!order) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'شناسه سفارش نامعتبر است' });
+    }
+
+    const updateData = {};
+    if (paymentStatus) updateData.paymentStatus = paymentStatus;
+    if (address) updateData.address = address;
+
+    const updatedOrder = await Order.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedOrder) {
       return res.status(404).json({ message: 'سفارش پیدا نشد' });
     }
 
-    // بروزرسانی فیلدها
-    if (paymentStatus) order.paymentStatus = paymentStatus;
-    if (address) order.address = address;
-
-    await order.save();
-
-    res.status(200).json({ message: 'سفارش با موفقیت بروزرسانی شد', order });
+    res.status(200).json({ message: 'سفارش با موفقیت بروزرسانی شد', order: updatedOrder });
   } catch (err) {
-    console.error('خطا در ویرایش سفارش:', err.message);
+    console.error('خطا در ویرایش سفارش:', err);
     res.status(500).json({ message: 'خطا در سرور' });
   }
 });
