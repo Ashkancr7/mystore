@@ -187,4 +187,28 @@ router.get('/all-orders', async (req, res) => {
   }
 });
 
+// ویرایش وضعیت پرداخت و آدرس سفارش
+router.put('/order/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { paymentStatus, address } = req.body;
+
+    const order = await Order.findById(id);
+    if (!order) {
+      return res.status(404).json({ message: 'سفارش پیدا نشد' });
+    }
+
+    // بروزرسانی فیلدها
+    if (paymentStatus) order.paymentStatus = paymentStatus;
+    if (address) order.address = address;
+
+    await order.save();
+
+    res.status(200).json({ message: 'سفارش با موفقیت بروزرسانی شد', order });
+  } catch (err) {
+    console.error('خطا در ویرایش سفارش:', err.message);
+    res.status(500).json({ message: 'خطا در سرور' });
+  }
+});
+
 module.exports = router;
