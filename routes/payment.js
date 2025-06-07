@@ -170,5 +170,20 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "خطا در دریافت پرداخت‌ها" });
   }
 });
+router.get('/my-orders', async (req, res) => {
+  try {
+    const userId = req.user.id; // فرض بر اینکه auth داری و middleware احراز هویت فعال شده
+
+    const orders = await Order.find({ 
+      userId,
+      paymentStatus: 'paid'
+    }).populate('items.productId');
+
+    res.json(orders);
+  } catch (err) {
+    console.error('خطا در گرفتن سفارش‌ها:', err.message);
+    res.status(500).json({ error: 'خطا در گرفتن سفارش‌ها' });
+  }
+});
 
 module.exports = router;
