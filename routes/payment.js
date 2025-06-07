@@ -202,8 +202,8 @@ router.put('/order/:id', async (req, res) => {
     if (address) updateData.address = address;
 
     const updatedOrder = await Order.findByIdAndUpdate(id, updateData, {
-      new: true,
-      runValidators: true,
+      new: true,           // پاسخ با سند به‌روز شده
+      runValidators: true, // اعتبارسنجی مدل اجرا شود
     });
 
     if (!updatedOrder) {
