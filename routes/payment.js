@@ -3,7 +3,6 @@ const axios = require('axios');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const Payment = require('../models/Payment');
-
 const router = express.Router();
 
 // مشخصات زرین‌پال
@@ -140,12 +139,13 @@ router.get('/verify', async (req, res) => {
 
       // 🔵 ذخیره پرداخت موفق در مجموعه Payment
       await Payment.create({
+        userId: order.userId || null,  // اطمینان حاصل کن که مقدار داره
         amount: order.finalAmount,
         authority: Authority,
         refId: result.ref_id,
         isPaid: true,
-        orderId: order._id.toString(),
-        receiverName:order.receiverName
+        orderId: order._id,
+        receiverName: order.address?.receiverName || ''
       });
 
       return res.redirect(
