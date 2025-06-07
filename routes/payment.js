@@ -4,6 +4,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 const Payment = require('../models/Payment');
 const router = express.Router();
+const auth = require('../middleware/auth'); // مثلا
 
 // مشخصات زرین‌پال
 const MERCHANT_ID = 'e150f93f-7a3b-432f-b7e2-4b72f8e198b1';
@@ -13,9 +14,10 @@ const CALLBACK_URL = 'https://mystore-pbfe.onrender.com/api/payment/verify'; // 
 // -------------------------
 //  1. ایجاد سفارش و پرداخت
 // -------------------------
-router.post('/pay', async (req, res) => {
+router.post('/pay', auth, async (req, res) => {
   try {
     const {
+      userId,
       items,
       address,
       shippingCost,
@@ -51,6 +53,7 @@ router.post('/pay', async (req, res) => {
 
     // ذخیره سفارش در حالت اولیه
     const newOrder = await Order.create({
+      userId,
       items: orderItems,
       address,
       totalAmount,
@@ -170,18 +173,16 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "خطا در دریافت پرداخت‌ها" });
   }
 });
-router.get('/my-orders', async (req, res) => {
+router.get('/all-orders', async (req, res) => {
   try {
-    const userId = req.user.id; // فرض بر اینکه auth داری و middleware احراز هویت فعال شده
-
-    const orders = await Order.find({ 
-      userId,
-      paymentStatus: 'paid'
-    }).populate('items.productId');
+    const orders = await Order.find()
+      .populate('userId', 'name email') // اطلاعات کاربر
+      .populate('items.productId', 'title price image') // اطلاعات محصول
+      .sort({ createdAt: -1 });
 
     res.json(orders);
   } catch (err) {
-    console.error('خطا در گرفتن سفارش‌ها:', err.message);
+    console.error(err.message);
     res.status(500).json({ error: 'خطا در گرفتن سفارش‌ها' });
   }
 });

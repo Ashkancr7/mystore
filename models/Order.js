@@ -11,6 +11,11 @@ const orderItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 const addressSchema = new mongoose.Schema({
@@ -25,6 +30,7 @@ const addressSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   items: [orderItemSchema],
   address: addressSchema,
 
