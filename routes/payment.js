@@ -211,4 +211,21 @@ router.put('/order/:id', async (req, res) => {
   }
 });
 
+// حذف سفارش با شناسه
+router.delete('/order/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedOrder = await Order.findByIdAndDelete(id);
+    if (!deletedOrder) {
+      return res.status(404).json({ message: 'سفارش پیدا نشد' });
+    }
+
+    res.status(200).json({ message: 'سفارش با موفقیت حذف شد' });
+  } catch (err) {
+    console.error('خطا در حذف سفارش:', err.message);
+    res.status(500).json({ message: 'خطا در سرور' });
+  }
+});
+
 module.exports = router;
