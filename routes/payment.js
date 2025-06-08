@@ -6,6 +6,7 @@ const Payment = require('../models/Payment');
 const router = express.Router();
 const auth = require('../middleware/auth'); // مثلا
 const mongoose = require('mongoose');
+const authAdmin = require('./middleware/authAdmin');
 
 // مشخصات زرین‌پال
 const MERCHANT_ID = 'e150f93f-7a3b-432f-b7e2-4b72f8e198b1';
@@ -175,7 +176,7 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "خطا در دریافت پرداخت‌ها" });
   }
 });
-router.get('/all-orders', async (req, res) => {
+router.get('/all-orders', authAdmin, async (req, res) => {
   try {
     const orders = await Order.find()
       .populate('userId', 'name email') // اطلاعات کاربر
