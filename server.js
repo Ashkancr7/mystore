@@ -6,6 +6,8 @@ const connectDB = require('./db');
 const productRoutes = require('./routes/products');
 const authRoutes = require('./routes/auth'); 
 const paymentRoutes = require('./routes/payment');
+const loginRoutes = require('./routes/login');
+
 const path = require('path');
 
 dotenv.config();
@@ -21,6 +23,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 
 app.use('/api/payment', paymentRoutes);
+app.use('/api/login', loginRoutes);
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
