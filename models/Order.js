@@ -11,11 +11,11 @@ const orderItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
+  // userId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  // },
 });
 
 const addressSchema = new mongoose.Schema({
