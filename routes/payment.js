@@ -6,7 +6,7 @@ const Payment = require('../models/Payment');
 const router = express.Router();
 const auth = require('../middleware/auth'); // مثلا
 const mongoose = require('mongoose');
-const authAdmin = require('./middleware/authAdmin');
+const authAdmin = require('../middleware/authAdmin');
 
 // مشخصات زرین‌پال
 const MERCHANT_ID = 'e150f93f-7a3b-432f-b7e2-4b72f8e198b1';
