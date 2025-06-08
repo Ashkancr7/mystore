@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
     return res.status(401).json({ message: 'دسترسی غیرمجاز، توکن وجود ندارد' });
   }
 
-  try {
+  try { 
     const decoded = jwt.verify(token, 'your_jwt_secret');
     req.user = decoded; // ذخیره اطلاعات کاربر در request
     next();

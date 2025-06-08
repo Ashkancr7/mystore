@@ -38,6 +38,7 @@ router.post('/pay', auth, async (req, res) => {
       return {
         productId: product._id,
         quantity: item.quantity,
+        userId,
       };
     });
 
