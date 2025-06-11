@@ -11,6 +11,15 @@ const orderItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  
+  selectedColor: {
+    type: String,
+    required: true,
+  },
+  selectedSize: {
+    type: String,
+    required: true,
+  },
   // userId: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'User',
