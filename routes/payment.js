@@ -39,8 +39,10 @@ router.post('/pay', auth, async (req, res) => {
       return {
         productId: product._id,
         quantity: item.quantity,
+        selectedColor: item.selectedColor,
+        selectedSize: item.selectedSize,
         userId,
-       
+        
       };
     });
 
@@ -67,8 +69,6 @@ router.post('/pay', auth, async (req, res) => {
       couponCode,
       paymentStatus: 'unpaid',
       orderStatus: 'pending',
-      selectedColor,
-      selectedSize
       
     });
 
