@@ -180,7 +180,7 @@ router.get('/all-orders', authAdmin, async (req, res) => {
   try {
     const orders = await Order.find()
       .populate('userId', 'name email') // اطلاعات کاربر
-      .populate('items.productId', 'name price image') // اطلاعات محصول
+      .populate('items.productId', 'name price image color size') // اطلاعات محصول
       .sort({ createdAt: -1 });
 
     res.json(orders);
