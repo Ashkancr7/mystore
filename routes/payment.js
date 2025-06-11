@@ -40,6 +40,8 @@ router.post('/pay', auth, async (req, res) => {
         productId: product._id,
         quantity: item.quantity,
         userId,
+        selectedColor: item.selectedColor,
+        selectedSize: item.selectedSize,
       };
     });
 
